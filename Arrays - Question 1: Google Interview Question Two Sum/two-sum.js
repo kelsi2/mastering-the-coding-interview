@@ -85,3 +85,29 @@ console.log(findTwoSum(arr5, t5));
 // Space complexity is much better than time so we can optimize (use more space to take less time)
 
 // 8. Can we optimize our solution?
+// 1. Calculate numberToFind
+// 2. nums[P2] === ntf
+// ntf is always recalculated. We should use a hashmap to store ntf instead of re-initializing:
+{ numberToFind: index }
+
+const numsOptimized = [1, 3, 7, 9, 2] 
+const tOptimized = 11
+
+const findTwoSumOptimized = function(nums, target) {
+  const numsMap = {};
+
+  for (let p = 0; p < nums.length; p++) {
+    const currentMapVal = numsMap[nums[p]];
+
+    if (currentMapVal >= 0) {
+      return [currentMapVal, p];
+    } else {
+      const numberToFind = target - nums[p];
+      numsMap[numberToFind] = p;
+    }
+  }
+  return null;
+}
+
+// Time is now O(n) which is a huge improvement
+// Space is also now O(n)
